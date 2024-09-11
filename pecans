@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compass Bible Church - STM Uganda Needs List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="https://avatars.planningcenteronline.com/uploads/organization/23513-1346202399/avatar.4.png" alt="Compass Bible Church Logo">
+        <nav>
+            <!-- Navigation links go here -->
+        </nav>
+    </header>
+    <section class="mission-trip-info">
+        <h1>Pecans (5lb bag)</h1>
+        <button onclick="window.location.href='https://www.costco.com/pecan-pieces,-5-lbs.product.100744275.html';">Item Details</button>
+    </section>
+    <section class="mission-details">
+        <img src="https://github.com/cindycbc/File-Manager-/blob/main/pecans.png?raw=true" alt="Uganda">
+        <div class="items-list">
+        </div>
+    </section>
+</body>
+</html>
