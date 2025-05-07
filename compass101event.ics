@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Compass Bible Church//Compass 101//EN
+BEGIN:VEVENT
+UID:compass101-20250601T090000
+DTSTAMP:20250507T000000Z
+DTSTART:20250601T090000
+DTEND:20250601T100000
+SUMMARY:Compass 101
+DESCRIPTION:Join us for Compass 101 with Pastor Lucas Pace — hear the Compass story, meet the team, and get connected. Child care available at 9 AM in Building 140 with Compass Kids. Light breakfast provided.
+LOCATION:Compass Bible Institute, 145 Columbia, Aliso Viejo, CA 92656
+END:VEVENT
+END:VCALENDAR
