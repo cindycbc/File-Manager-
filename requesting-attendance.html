@@ -1,39 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Requesting attendance...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <title>Requesting attendance…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 32px; color:#222; }
-    a { color: #1d4ed8; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:32px;color:#222}
+    a{color:#1d457b;text-decoration:none}
+    a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
   <p id="status">Requesting attendance… redirecting you to the event.</p>
-  <p><a id="eventLink" href="#" rel="noopener">Go to event</a></p>
+  <p><a id="eventLink" href="#" rel="noopener">Go to event →</a></p>
 
   <script>
     (function () {
       const p = new URLSearchParams(location.search);
       const eid = p.get('eid');
       const gid = p.get('gid');
+      const statusEl = document.getElementById('status');
+      const linkEl   = document.getElementById('eventLink');
+
       if (!eid || !gid) {
-        document.getElementById('status').textContent = 'Missing parameters.';
+        statusEl.textContent = 'Missing parameters.';
         return;
       }
 
       const requestUrl = `https://groups.planningcenteronline.com/events/${eid}/attendance_request`;
       const eventUrl   = `https://groups.planningcenteronline.com/groups/${gid}/events/${eid}`;
+      linkEl.href = eventUrl; // visible fallback
 
-      // Fire the request in the background using the user's existing PC session
-      fetch(requestUrl, { mode: 'no-cors', credentials: 'include' })
-        .catch(() => { /* opaque/no-cors is expected, still sends the request */ })
-        .finally(() => { location.replace(eventUrl); });
-
-      // Backup clickable link in case redirect is blocked
-      document.getElementById('eventLink').href = eventUrl;
+      // Fire the request in the background; then redirect to event
+      // (no new tab; avoids showing a “cannot find page”)
+      const img = new Image();
+      img.src = requestUrl;      // sends a GET; user must be logged into PCO in this browser
+      setTimeout(() => { location.replace(eventUrl); }, 900);
     })();
   </script>
 </body>
