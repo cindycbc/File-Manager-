@@ -2,40 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Requesting attendance…</title>
+  <title>Request attendance</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:32px;color:#222}
-    a{color:#1d457b;text-decoration:none}
-    a:hover{text-decoration:underline}
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 40px; color:#222; }
+    .btn { padding:10px 16px; border:1px solid #e5e7eb; border-radius:8px; background:#b91c1c; color:#fff; cursor:pointer; }
+    .muted { color:#666; font-size:14px; margin-top:10px; }
   </style>
 </head>
 <body>
-  <p id="status">Requesting attendance… redirecting you to the event.</p>
-  <p><a id="eventLink" href="#" rel="noopener">Go to event →</a></p>
+  <h1 style="margin:0 0 10px 0;">Request attendance</h1>
+  <p class="muted">Click the button below to send the request, then you’ll be taken to the event page.</p>
+  <p>
+    <button id="go" class="btn">Request Attendance →</button>
+  </p>
+  <p class="muted"><a id="eventLink" href="#" rel="noopener">Go to event</a></p>
 
   <script>
     (function () {
       const p = new URLSearchParams(location.search);
       const eid = p.get('eid');
       const gid = p.get('gid');
-      const statusEl = document.getElementById('status');
-      const linkEl   = document.getElementById('eventLink');
-
-      if (!eid || !gid) {
-        statusEl.textContent = 'Missing parameters.';
-        return;
-      }
+      if (!eid || !gid) { document.body.innerHTML = '<p>Missing parameters.</p>'; return; }
 
       const requestUrl = `https://groups.planningcenteronline.com/events/${eid}/attendance_request`;
       const eventUrl   = `https://groups.planningcenteronline.com/groups/${gid}/events/${eid}`;
-      linkEl.href = eventUrl; // visible fallback
+      document.getElementById('eventLink').href = eventUrl;
 
-      // Fire the request in the background; then redirect to event
-      // (no new tab; avoids showing a “cannot find page”)
-      const img = new Image();
-      img.src = requestUrl;      // sends a GET; user must be logged into PCO in this browser
-      setTimeout(() => { location.replace(eventUrl); }, 900);
+      document.getElementById('go').addEventListener('click', () => {
+        // Open the action in a new tab (top-level → cookies included)
+        let w = null;
+        try { w = window.open(requestUrl, '_blank', 'noopener,noreferrer'); } catch (e) {}
+        // Best effort: close the tab shortly after (may silently fail in some browsers)
+        setTimeout(() => { try { if (w && !w.closed) w.close(); } catch(_) {} }, 1000);
+        // Navigate this tab to the event
+        window.location.replace(eventUrl);
+      });
     })();
   </script>
 </body>
